@@ -1,3 +1,3 @@
-FROM default-route-openshift-image-registry.apps-crc.testing/demo/sleeper:0.0.1
+FROM image-registry.openshift-image-registry.svc:5000/demo/ocp-test:latest
 
 RUN echo "hello"
