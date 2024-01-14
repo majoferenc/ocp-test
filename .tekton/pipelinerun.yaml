@@ -1,0 +1,25 @@
+apiVersion: tekton.dev/v1beta1
+kind: PipelineRun
+metadata:
+  generateName: clone-build-push-run
+spec:
+  pipelineRef:
+    name: clone-build-push
+#  podTemplate:
+#    securityContext:
+#      fsGroup: 1001
+#      runAsUser: 1001
+  workspaces:
+  - name: shared-data
+    volumeClaimTemplate:
+      spec:
+        accessModes:
+        - ReadWriteOnce
+        resources:
+          requests:
+            storage: 1Gi
+  params:
+  - name: repo-url
+    value: https://github.com/majoferenc/ocp-test.git
+  - name: image-reference
+    value: image-registry.openshift-image-registry.svc.cluster.local:5000/pipelines-tutorial/appimage:1.0
