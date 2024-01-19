@@ -43,9 +43,6 @@ spec:
     runAfter: ["build-push"]
     taskRef:
       name: openshift-client
-    workspaces:
-    - name: source
-      workspace: shared-data
     params:
     - name: IMAGE
       value: $(params.image-reference)
@@ -53,8 +50,9 @@ spec:
       value: $(params.deployment-name)
     - name: SCRIPT
       value: |
+        oc delete all -l deployment=appimage
         oc new-app $(params.image-reference)
         echo "-----------Displaying all the pods-----------"
         sleep 10
-        oc get pods
+        oc get all -l deployment=appimage
         oc expose service $(params.deployment-name)
