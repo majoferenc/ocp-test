@@ -8,6 +8,7 @@
 
 # References
 - Tekton Hub: https://hub.tekton.dev/
+- Tekton Docu: https://tekton.dev/docs/pipelines/
 
 ## Prepare local Env (CRC)
 In your shell:

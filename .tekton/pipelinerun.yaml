@@ -5,10 +5,6 @@ metadata:
 spec:
   pipelineRef:
     name: clone-build-push
-#  podTemplate:
-#    securityContext:
-#      fsGroup: 1001
-#      runAsUser: 1001
   workspaces:
   - name: shared-data
     volumeClaimTemplate:
