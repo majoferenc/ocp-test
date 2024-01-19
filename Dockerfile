@@ -1,4 +1,4 @@
-FROM image-registry.openshift-image-registry.svc:5000/nferenc-demo-app/demo-app:latest
+FROM ubi8/openjdk-8:1.18-2
 
 RUN echo "hello"
 
