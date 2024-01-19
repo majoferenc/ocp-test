@@ -4,8 +4,10 @@
 - Code Ready Containers CRC (Can be replaced by any other RedHat OCP cluster)
 - OC CLI - https://docs.openshift.com/container-platform/4.8/cli_reference/openshift_cli/getting-started-cli.html
 - Tekton CLI - https://tekton.dev/vault/cli-v0.21.0/
+- Helm CLI - https://helm.sh/docs/intro/install/
 
-
+# References
+- Tekton Hub: https://hub.tekton.dev/
 
 ## Prepare local Env (CRC)
 In your shell:
@@ -27,6 +29,10 @@ In your shell:
       tkn hub install task buildah
       tkn hub install task kaniko
       tkn hub install task openshift-client
+
+If using Helm for deployment:
+
+      tkn hub install task helm-upgrade-from-source
 
 ## Add Repo to OCP
 Create file repo.yaml with content:
@@ -89,7 +95,7 @@ Powershell:
 ### Allow deployment from tekton pipeline
 
       oc policy add-role-to-user edit -z default -n tekton-demo
-      
+
 ### Create Pipeline
 
       oc apply -f .tekton/pipeline.yaml
@@ -101,3 +107,11 @@ Powershell:
 ### Configure auto trigger after commit in git
 
       oc apply -f .tekton/push.yaml
+
+### Create Default Helm Template
+
+      helm create testapp-chart
+ 
+### Testing Helm Chart by installing it manually
+
+      helm upgrade --install testapp ./helm/testapp-chart/

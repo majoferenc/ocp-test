@@ -50,9 +50,10 @@ spec:
       value: $(params.deployment-name)
     - name: SCRIPT
       value: |
-        oc delete all -l deployment=appimage
+        oc delete deployment appimage || true
+        oc delete all -l deployment=appimage --force
+        sleep 10
         oc new-app $(params.image-reference)
         echo "-----------Displaying all the pods-----------"
         sleep 10
         oc get all -l deployment=appimage
-        oc expose service $(params.deployment-name)
