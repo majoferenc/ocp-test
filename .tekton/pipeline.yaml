@@ -11,6 +11,8 @@ spec:
     type: string
   - name: image-reference
     type: string
+  - name: deployment-name
+    type: string
   workspaces:
   - name: shared-data
   tasks:
@@ -37,3 +39,22 @@ spec:
     # since pushing to internal registry we skip TLS verify
     - name: TLSVERIFY
       value: 'false'
+  - name: deploy-app
+    runAfter: ["build-push"]
+    taskRef:
+      name: openshift-client
+    workspaces:
+    - name: source
+      workspace: shared-data
+    params:
+    - name: IMAGE
+      value: $(params.image-reference)
+    - name: DEPLOYMENT_NAME
+      value: $(params.deployment-name)
+    - name: SCRIPT
+      value: |
+        oc new-app $(params.image-reference)
+        echo "-----------Displaying all the pods-----------"
+        sleep 10
+        oc get pods
+        oc expose service $(params.deployment-name)
